@@ -27,6 +27,7 @@ namespace FreeRoomUserCounter
 
         public async Task Count()
         {
+            Debug.Log("count");
             XPCJP = Client.GetGuild(Option.XPCJPGuildId);
             var now = DateTime.Now;
             var lastWeek = now.AddDays(-7);
@@ -37,18 +38,20 @@ namespace FreeRoomUserCounter
             foreach (var optionFreeRoomCategoryId in Option.FreeRoomCategoryIds)
             {
                 var category = XPCJP.GetCategoryChannel(optionFreeRoomCategoryId);
+                Debug.Log($"カテゴリー:{category.Name}");
                 foreach (SocketGuildChannel channel in category.Channels)
                 {
                     if (channel is SocketTextChannel)
                     {
                         var textChannel = channel as SocketTextChannel;
-
+                        Debug.Log($"チャンネル:{textChannel.Name}");
 
                         if (Count(lastWeek, now, channel.Id) >= 5)
                         {
                             // なし
                             return;
                         }
+
                         if (Count(beforeLastWeek, lastWeek, channel.Id) >= 5)
                         {
                             // アラート
@@ -75,7 +78,7 @@ namespace FreeRoomUserCounter
         private int Count(DateTime begin, DateTime end, ulong channelId)
         {
             var users = mySql.GetUsers(begin, end, channelId);
-            Console.WriteLine(string.Join(" ", users));
+            Debug.Log(string.Join(" ", users));
             return users.Count(l =>
             {
                 try
@@ -90,7 +93,6 @@ namespace FreeRoomUserCounter
                     return false;
                 }
             });
-
         }
     }
 }
