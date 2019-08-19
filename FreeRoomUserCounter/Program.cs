@@ -32,7 +32,10 @@ namespace FreeRoomUserCounter
             client.Ready += Ready;
             await client.LoginAsync(TokenType.Bot, options.Token);
             await client.StartAsync();
-            ManualResetEvent.WaitOne();
+            while (!counter.Completed)
+            {
+                await Task.Delay(1000);
+            }
             Debug.Log("end");
         }
 

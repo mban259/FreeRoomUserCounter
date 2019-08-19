@@ -15,11 +15,14 @@ namespace FreeRoomUserCounter
         private Options Option;
         private MySQLClient mySql;
         private SocketGuild XPCJP;
+
+        public bool Completed { get; private set; } 
         public Counter(Options option, DiscordSocketClient client)
         {
             Client = client;
             Option = option;
             mySql = new MySQLClient(option.Server, option.User, option.Password);
+            Completed = false;
         }
 
         public async Task Count()
@@ -65,6 +68,8 @@ namespace FreeRoomUserCounter
             }
 
             await notificationChannel.SendMessageAsync($"アラート\n{alert.ToString()}\n爆破\n{bakuha.ToString()}");
+
+            Completed = true;
         }
 
         private int Count(DateTime begin, DateTime end, ulong channelId)
