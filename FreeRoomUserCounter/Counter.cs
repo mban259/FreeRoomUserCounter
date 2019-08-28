@@ -49,7 +49,8 @@ namespace FreeRoomUserCounter
                         if (Count(lastWeek, now, channel.Id) >= 5)
                         {
                             // なし
-                            return;
+                            Debug.Log($"なし {channel.Id}:{channel.Name}");
+                            continue;
                         }
 
                         if (Count(beforeLastWeek, lastWeek, channel.Id) >= 5)
