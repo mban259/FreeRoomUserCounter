@@ -80,20 +80,7 @@ namespace FreeRoomUserCounter
         {
             var users = mySql.GetUsers(begin, end, channelId);
             Debug.Log(string.Join(" ", users));
-            return users.Count(l =>
-            {
-                try
-                {
-                    if (l == 0)
-                        return false;
-                    return !XPCJP.GetUser(l).IsBot;
-                }
-                catch (Exception e)
-                {
-                    Debug.Log(e);
-                    return false;
-                }
-            });
+            return users.Length;
         }
     }
 }

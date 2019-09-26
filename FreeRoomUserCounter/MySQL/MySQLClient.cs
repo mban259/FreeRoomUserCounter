@@ -34,7 +34,7 @@ namespace FreeRoomUserCounter.MySQL
             using (var command = connection.CreateCommand())
             {
                 command.CommandText =
-                    "SELECT DISTINCT user FROM guild_messages WHERE channel = @channel AND time BETWEEN @begin AND @end";
+                    "SELECT DISTINCT user FROM guild_messages WHERE (channel = @channel) AND (time BETWEEN @begin AND @end) AND (is_bot = 0)";
                 command.Parameters.AddWithValue("@channel", channelId);
                 command.Parameters.AddWithValue("@begin", begin);
                 command.Parameters.AddWithValue("@end", end);
